@@ -60,7 +60,7 @@ Laravel ищет представления в папке resources/views. Ну�
     <title>Главная</title>
 </head>
 <body>
-    <h1>Добро пожаловать на главную страницу!</h1>
+    <h1>Здравствуйте!Добро пожаловать!</h1>
 </body>
 </html>
 ```
@@ -80,3 +80,95 @@ Laravel ищет представления в папке resources/views. Ну�
 </html>
 ```
 ![image](https://github.com/user-attachments/assets/f0ff828e-ba01-45c6-8bb7-fc8676507cce)
+
+## №3.2. Создание маршрутов для задач
+Создайте класс-контроллер TaskController для обработки запросов, связанных с задачами
+```
+php artisan make:controller TaskController
+```
+2. Добавление методов в TaskController
+Откроем app/Http/Controllers/TaskController.php и добавим пустые методы для работы с задачами:
+
+```
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class TaskController extends Controller
+{
+    // Отображение списка задач
+    public function index()
+    {
+        return 'This is a list of tasks';
+    }
+
+    // Отображение формы создания задачи
+    public function create()
+    {
+        return 'Task creation form';
+    }
+
+    // Сохранение новой задачи
+    public function store(Request $request)
+    {
+        // Здесь будет код сохранения задачи
+    }
+
+    // Отображение конкретной задачи
+    public function show($id)
+    {
+        return "Displaying task with ID: $id";
+    }
+
+    // Отображение формы редактирования задачи
+    public function edit($id)
+    {
+        return "Editing task with ID: $id";
+    }
+
+    // Обновление существующей задачи
+    public function update(Request $request, $id)
+    {
+        // Здесь будет код обновления задачи
+    }
+
+    // Удаление задачи
+    public function destroy($id)
+    {
+        // Здесь будет код удаления задачи
+    }
+}
+
+```
+3. Создание маршрутов вручную в routes/web.php
+Если бы мы создавали маршруты вручную, код выглядел бы так:
+
+```
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
+
+Route::prefix('tasks')->group(function () {
+    Route::get('/', [TaskController::class, 'index'])->name('tasks.index'); // Список задач
+    Route::get('/create', [TaskController::class, 'create'])->name('tasks.create'); // Форма создания
+    Route::post('/', [TaskController::class, 'store'])->name('tasks.store'); // Создание задачи
+    Route::get('/{id}', [TaskController::class, 'show'])->where('id', '[0-9]+')->name('tasks.show'); // Отображение задачи
+    Route::get('/{id}/edit', [TaskController::class, 'edit'])->where('id', '[0-9]+')->name('tasks.edit'); // Форма редактирования
+    Route::put('/{id}', [TaskController::class, 'update'])->where('id', '[0-9]+')->name('tasks.update'); // Обновление задачи
+    Route::delete('/{id}', [TaskController::class, 'destroy'])->where('id', '[0-9]+')->name('tasks.destroy'); // Удаление задачи
+});
+```
+4. Использование ресурсного контроллера
+Laravel позволяет автоматизировать создание маршрутов с помощью Route::resource(). Это заменяет ручное создание маршрутов.
+
+В файле routes/web.php заменим код на:
+```
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
+Route::resource('tasks', TaskController::class);
+```
+Эта строка автоматически создаст маршруты для всех CRUD-операций.
+
+5.Проверка маршрутов
+![image](https://github.com/user-attachments/assets/d52bb2d8-d104-40b3-839c-8f0c22d13fc0)
