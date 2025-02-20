@@ -19,7 +19,8 @@ php artisan make:controller HomeController
 Открываем app/Http/Controllers/HomeController.php и добавляем два метода:
 ### 2.1. Метод index() для главной страницы
 Метод будет возвращать представление home.blade.php.
-```<?php
+```php
+<?php
 
 namespace App\Http\Controllers;
 
