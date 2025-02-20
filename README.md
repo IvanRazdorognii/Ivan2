@@ -79,3 +79,4 @@ Laravel ищет представления в папке resources/views. Ну�
 </body>
 </html>
 ```
+![image](https://github.com/user-attachments/assets/f0ff828e-ba01-45c6-8bb7-fc8676507cce)
